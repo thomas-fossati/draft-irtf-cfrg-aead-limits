@@ -5,10 +5,10 @@
 Network Working Group                                         F. Günther
 Internet-Draft                                                ETH Zurich
 Intended status: Informational                                M. Thomson
-Expires: 20 January 2022                                         Mozilla
+Expires: 24 February 2022                                        Mozilla
                                                                C.A. Wood
                                                               Cloudflare
-                                                            19 July 2021
+                                                          23 August 2021
 
 
                     Usage Limits on AEAD Algorithms
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 January 2022.
+   This Internet-Draft will expire on 24 February 2022.
 
 Copyright Notice
 
@@ -480,11 +480,16 @@ Table of Contents
 
    Concrete multi-key bounds for AEAD_AES_128_GCM and AEAD_AES_256_GCM
    exist due to Theorem 4.3 in [GCM-MU2], which covers protocols with
-   nonce randomization, like TLS 1.3 [TLS] and QUIC [RFC9001].
+   nonce randomization, like TLS 1.3 [TLS] and QUIC [RFC9001].  Here,
+   the full nonce is XORed with a secret, random offset.
 
-   Results for AES-GCM without nonce randomization are captured by
-   Theorem 3.1 in [GCM-MU2], which apply to protocols such as TLS 1.2
-   [RFC5246].  This produces similar limits under most conditions.
+   Results for AES-GCM with random, partially implicit nonces [RFC5288]
+   are captured by Theorem 5.3 in [GCM-MU2], which apply to protocols
+   such as TLS 1.2 [RFC5246].  Here, the implicit part of the nonce is a
+   random value, of length at least 32 bits and fixed per key, while the
+   explicit part of the nonce is a non-repeating counter.  The full
+   nonce is the concatenation of the two parts.  This produces similar
+   limits under most conditions.
 
    For this AEAD, n = 128, t = 128, and r = 96; the key length is k =
    128 or k = 256 for AEAD_AES_128_GCM and AEAD_AES_128_GCM
@@ -505,14 +510,24 @@ Table of Contents
    should be increased by 161 for AEAD_AES_128_GCM and by 97 for
    AEAD_AES_256_GCM.
 
-   Protocols without nonce randomization have limits that are
-   essentially the same provided that p is not less than 2^-48, as the
-   simplified expression for AEA does not include the 2^-48 term:
+   Protocols with random, partially implicit nonces have the following
+   limit, which is similar to that for nonce randomization provided that
+   p is not less than 2^-48:
 
+   AEA <= (((q+v)*o + (q+v)^2) / 2^(k+26)) + ((q+v)*l*B / 2^127)
+
+   The first term is negligible if k = 256; this implies the following
+   simplified limits:
+
+   AEA <= (q+v)*l*B / 2^127
    q + v <= p * 2^127 / (l * B)
 
-   Without nonce randomization, B should be increased by an additional
-   0.5.
+   For k = 128, assuming o <= q+v (i.e., that the attacker does not
+   spend more work than all legitimate protocol users together), the
+   limits are:
+
+   AEA <= (((q+v)*o + (q+v)^2) / 2^154) + ((q+v)*l*B / 2^127)
+   q + v <= min( sqrt(p) * 2^76,  p * 2^126 / (l * B) )
 
 6.1.2.  Confidentiality Limit
 
@@ -525,9 +540,11 @@ Table of Contents
 
    q <= (p * 2^127 - 2^79) / (l * B)
 
-   As before, the limit without nonce randomization is:
+   Similarly, the limits for protocols with random, partially implicit
+   nonces are:
 
-   q <= (p * 2^127) / (l * B)
+   CA <= ((q*o + q^2) / 2^(k+26)) + (q*l*B / 2^127)
+   q <= min( sqrt(p) * 2^76,  p * 2^126 / (l * B) )
 
 6.1.3.  Integrity Limit
 
@@ -709,6 +726,11 @@ Table of Contents
               (TLS) Protocol Version 1.2", RFC 5246,
               DOI 10.17487/RFC5246, August 2008,
               <https://datatracker.ietf.org/doc/html/rfc5246>.
+
+   [RFC5288]  Salowey, J., Choudhury, A., and D. McGrew, "AES Galois
+              Counter Mode (GCM) Cipher Suites for TLS", RFC 5288,
+              DOI 10.17487/RFC5288, August 2008,
+              <https://datatracker.ietf.org/doc/html/rfc5288>.
 
    [RFC8645]  Smyshlyaev, S., Ed., "Re-keying Mechanisms for Symmetric
               Keys", RFC 8645, DOI 10.17487/RFC8645, August 2019,
