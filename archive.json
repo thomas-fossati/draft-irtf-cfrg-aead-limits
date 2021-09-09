@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-08T00:45:26.895189+00:00",
+  "timestamp": "2021-09-09T01:09:03.880978+00:00",
   "repo": "cfrg/draft-irtf-cfrg-aead-limits",
   "labels": [
     {
@@ -128,15 +128,15 @@
       "id": "MDU6SXNzdWU2MjI1NzEzNzk=",
       "title": "Add a reference to RFC 8645",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/issues/10",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "smyshsv",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Of course I can be biased here, but it seems to me that a reference to RFC 8645 can be very convenient in the draft, since it considers several ways to increase the bounds in some cases - such as hostile environments with adversaries with side-channel capabilities - particularily for GCM.",
       "createdAt": "2020-05-21T15:15:33Z",
-      "updatedAt": "2020-05-22T20:38:30Z",
-      "closedAt": null,
+      "updatedAt": "2021-07-19T21:46:57Z",
+      "closedAt": "2021-07-19T21:46:57Z",
       "comments": [
         {
           "author": "martinthomson",
@@ -245,7 +245,7 @@
       "id": "MDU6SXNzdWU2NTc1MDA5NzQ=",
       "title": "Discuss post-quantum threat model implications",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/issues/17",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -254,9 +254,17 @@
       ],
       "body": "Per the CFRG interim meeting on 7/15.",
       "createdAt": "2020-07-15T16:50:34Z",
-      "updatedAt": "2020-09-21T14:14:19Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-02-19T02:06:29Z",
+      "closedAt": "2021-02-19T02:06:28Z",
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "After discussion with @martinthomson and @fxguenther, we consider this to be out of scope. (Anything new here would likely require substantial analysis that does not yet exist.) Closing.",
+          "createdAt": "2021-02-19T02:06:28Z",
+          "updatedAt": "2021-02-19T02:06:28Z"
+        }
+      ]
     },
     {
       "number": 18,
@@ -313,15 +321,15 @@
       "id": "MDU6SXNzdWU2ODgyODEwNTU=",
       "title": "Highlight that bounds are derived from different papers with different models",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/issues/24",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "... and we're just trying to harmonize everything, which may lead to some discrepancies.",
       "createdAt": "2020-08-28T18:35:58Z",
-      "updatedAt": "2020-08-28T18:35:58Z",
-      "closedAt": null,
+      "updatedAt": "2021-02-19T13:56:07Z",
+      "closedAt": "2021-02-19T13:56:07Z",
       "comments": []
     },
     {
@@ -329,15 +337,15 @@
       "id": "MDU6SXNzdWU3NDUxNzk3NTQ=",
       "title": "Mattsson feedback",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/issues/28",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "https://mailarchive.ietf.org/arch/msg/cfrg/x_M_WDJGqcJNvoqILDf4-75Mxqg/\r\n\r\nComments:\r\n\r\n-- \"plaintext, and optional associated data\"\r\n \r\nP and A are both optional in RFC 5116.\r\n\r\n\r\n-- It would be good if the document states that it only focuses on \"single forgery attacks\"\r\n\r\nI think some readers might believe that a second forgery is as hard as the first, which it is not. It it typically much easier. It might also vary drastically between algorithms as calculated in [1].\r\n\r\n\r\n-- I think the document should briefly explain the assumptions about the adversary. For both CA and IA, one assumption worth explaining is that the adversary has access to an encryption oracle and can freely encrypt chosen-plaintexts.\r\n\r\n\r\n-- The table defines l as \"length of each message\" while a paragraph further down writes \"maximum message size (l)\".\r\n\r\n\r\n-- \u201dpassive attacker\u201d\r\n\r\nFor a reader that does now the IND-CPA game by heart it might be good to point out that the \u201cpassive\u201d attacker does not just eavesdrop but also choses all the encrypted plaintexts.\r\n\r\n\r\n-- \u201cIntegrity limit (IL): The number ciphertexts an application can decrypt, either successfully or not\u201d\r\n\r\nThat IL also count successful decryptions seems to contradict other parts of the document that links IL to v which by definition only counts failed attempts.\r\n\r\n\r\n-- \u201cThis implies the following usage limit: q + s <= p^(1/2) * 2^(129/2) \u2013 1\u201d\r\n   \u201cThis implies the following limit: v <= (p * 2^127) / (l + 1)\u201d\r\n\r\nThis does not follow with the current definition of p (p = CA or p = IA). To make the inequalities hold I think you need to define p as:\r\n \r\n\"Upper bound on adversary attack success probability\"\r\n\r\njust like the parameter epsilon in [AEBounds].\r\n\r\n\r\n-- I think the document should briefly explain the assumptions about the algorithms. In [GCMProofs] it is e.g. assumed that AES is a PRP. Future cryptanalysis that does not make these ideal assumptions could make the limits worse.\r\n\r\n\r\n-- The document should make it clear that formulas for CA and IA (at least for GCM) are upper bounds. Future analysis could make the limits better. That they are just bounds also make any direct comparision between algorithms tricky as some bounds might be tigher than others.\r\n\r\n\r\n- The draft briefly mention that small limits lead to denial-of-service attacks. The DTLS 1.3 draft does that.\r\n\r\n\r\n-- The draft seems to make the assumption that l is fixed like n, k, r. I don't think this needs to be the case. My understanding is that for the GCM limits, l_max_allowed can be replaced by l_max_seen being the largest length processed. The encryption or decryption function would then terminate when CA or IA can not be verified to be under the chosen bound. This would make a big difference for applications typically processing much smaller messages than for example 2^14. For the CCM integrity bounds, the formula would probably have to involve (2 * l_max_allowed * q + 2 * l_max_seen_* v). The DoS problem would still be tied to l_max_allowed.",
       "createdAt": "2020-11-18T00:03:58Z",
-      "updatedAt": "2020-12-06T22:23:43Z",
-      "closedAt": null,
+      "updatedAt": "2021-02-19T13:55:57Z",
+      "closedAt": "2021-02-19T13:55:57Z",
       "comments": [
         {
           "author": "fxguenther",
@@ -354,6 +362,118 @@
           "updatedAt": "2020-12-06T22:23:43Z"
         }
       ]
+    },
+    {
+      "number": 30,
+      "id": "MDU6SXNzdWU4MjkxNTE2ODc=",
+      "title": "Analyses assume perfect primitives",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/issues/30",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We need to document this fact because if the primitive is not perfect, then limits might be very different.",
+      "createdAt": "2021-03-11T13:27:21Z",
+      "updatedAt": "2021-03-18T12:39:32Z",
+      "closedAt": "2021-03-18T12:39:32Z",
+      "comments": []
+    },
+    {
+      "number": 31,
+      "id": "MDU6SXNzdWU4MjkxODg4NzE=",
+      "title": "Rename branch to main",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/issues/31",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "@chris-wood might have the keys here.  It's a fairly simple process if you have ownership rights.",
+      "createdAt": "2021-03-11T14:10:43Z",
+      "updatedAt": "2021-03-17T13:06:58Z",
+      "closedAt": "2021-03-17T13:06:58Z",
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Done.",
+          "createdAt": "2021-03-17T13:06:58Z",
+          "updatedAt": "2021-03-17T13:06:58Z"
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "MDU6SXNzdWU5MzY2MTY3NTM=",
+      "title": "Produce some example values",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/issues/34",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "A simple table of exemplary values under somewhat reasonable assumptions might help make the document more usable.\r\n\r\nLet's say that we pick `l` of 2<sup>11</sup> and AEA bound of 2<sup>-40</sup> and use the multi-user values.  That might produce some useful numbers for each of the different AEADs we analyze across a fair range of protocols.",
+      "createdAt": "2021-07-05T02:13:21Z",
+      "updatedAt": "2021-07-12T21:56:15Z",
+      "closedAt": "2021-07-12T14:50:52Z",
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This is wrong, but I'm fixing it now.",
+          "createdAt": "2021-07-12T21:56:15Z",
+          "updatedAt": "2021-07-12T21:56:15Z"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "id": "MDU6SXNzdWU5MzY2ODEzNTM=",
+      "title": "Counting bytes",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/issues/35",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The assumption we've adopted with this work is that the user will count AEAD seal/unseal operations.  Where application data bytes are counted, the most conservative approach is to set `l=1` and use the resulting limit to limit the number of bytes between rekey operations.  Obviously, this could grossly over-estimate the overheads involved and could result in very small limits in some cases.\r\n\r\nWhat do we want to say about this approach?  Is it a valid way to apply the advice?  I think the answer is probably yes, but do we want to explicitly say that?\r\n\r\nThere are a few things to consider here:\r\n\r\n* Is the difference really that bad?  For 128-bit blocks, the difference between counting 1 byte blocks could be a factor of 16 too high, which might seem bad, but given the numbers we're talking about, that's not going to make a huge difference in many cases.\r\n* If the approach leads to more frequent rekeying, is rekeying cheap enough to justify being so conservative?  If over-counting, then rekeying will occur too much, but maybe that's OK.  We're seeing in QUIC that rekeying doesn't happen enough in practice to shake bugs out of the system.\r\n* We might need to look at the analysis in light of this to ensure that we haven't assumed anything about the size of \"l\".  I don't think that we have, but double-checking seems prudent.",
+      "createdAt": "2021-07-05T04:48:24Z",
+      "updatedAt": "2021-07-12T21:58:00Z",
+      "closedAt": "2021-07-12T21:58:00Z",
+      "comments": []
+    },
+    {
+      "number": 37,
+      "id": "MDU6SXNzdWU5NDE5MzI0MjE=",
+      "title": "John Mattsson's analysis",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/issues/37",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In his [presentation](https://datatracker.ietf.org/meeting/110/materials/slides-110-saag-analysis-of-usage-limits-of-aead-algorithms-00.pdf) to SAAG at IETF 110 @emanjon made a few points regarding ChaCha/Poly and CCM_8 -- see slide 11 for the summary.  Have those being considered?",
+      "createdAt": "2021-07-12T10:55:52Z",
+      "updatedAt": "2021-07-12T10:55:52Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 41,
+      "id": "MDU6SXNzdWU5ODk0ODI2MzY=",
+      "title": "nonce length ",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/issues/41",
+      "state": "CLOSED",
+      "author": "jsalowey",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The document only mentions the choice of nonce length in one place, section 6.1.  \r\n\r\n+ Nonce length should also be mentioned as r = 96 in section 5.1 as well.  \r\n+ I think the document should also have some discussion on the choice of nonce length and the limits since it some crypto implementations allow for the choice of nonce and some applications choose a nonce > 96 under the impression that bigger is better.  Adding something to the security considerations section seems appropriate:\r\n\r\n> This document assumes a nonce length of 96-bits for AES-GCM.  For nonces of other lengths the specification hashes the nonce input making analysis more difficult. [GCMProofs] shows that using a variable length nonce has worse security bounds for AES-GCM. \r\n\r\nIf there is other analyses on nonce length and AES-GCM limits that would be good to include those too. ",
+      "createdAt": "2021-09-06T23:35:45Z",
+      "updatedAt": "2021-09-07T13:23:42Z",
+      "closedAt": "2021-09-07T13:23:42Z",
+      "comments": []
     }
   ],
   "pulls": [
@@ -369,7 +489,7 @@
       "labels": [],
       "body": "Took a first pass through.  I made a bunch of inline edits with comments.  I will turn those into real issues when I get a chance, but I spent my time for today already.\r\n\r\nI thought the lib directory was accidentally loaded, but it turns out that it was accidentally checked in instead.\r\n\r\nBTW, you should make this draft-wood-*.  We don't need to follow crypto conventions, and I have barely done any work \u00af\\_(\u30c4)_/\u00af",
       "createdAt": "2020-05-12T06:36:14Z",
-      "updatedAt": "2020-05-12T15:29:06Z",
+      "updatedAt": "2021-03-17T13:06:28Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
       "baseRefName": "master",
       "baseRefOid": "59ae2a71b299602fc5f738f2d05f1c511f3bd997",
@@ -448,7 +568,7 @@
       "labels": [],
       "body": "I didn't drop the term `(v / 2^t)` since, when including it, I don't think it turns out to be negligible. In particular, here's the steps I followed:\r\n\r\n```\r\n(v / 2^t) + (2l * (v + q))^2 / 2^n <= p\r\n=> (v / 2^128) + (2l * (v + q))^2 / 2^128 <= p\r\n=> v + (2l * (v + q))^2 <= 2^128 * p\r\n```\r\n\r\nIf l is small, the first term becomes pretty important. What do you think?",
       "createdAt": "2020-05-13T21:29:38Z",
-      "updatedAt": "2020-05-14T12:33:19Z",
+      "updatedAt": "2021-03-17T13:06:29Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
       "baseRefName": "master",
       "baseRefOid": "1888b59ad7dcafdb1e1d7cf8071b1d07555a763d",
@@ -498,7 +618,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2020-05-14T12:47:13Z",
-      "updatedAt": "2020-05-15T00:14:30Z",
+      "updatedAt": "2021-03-17T13:06:29Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
       "baseRefName": "master",
       "baseRefOid": "31e2738b9d0e226e314fe43708c370fd22c9b313",
@@ -532,7 +652,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2020-05-15T00:00:20Z",
-      "updatedAt": "2020-05-15T00:14:54Z",
+      "updatedAt": "2021-03-17T13:06:31Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
       "baseRefName": "master",
       "baseRefOid": "31e2738b9d0e226e314fe43708c370fd22c9b313",
@@ -623,7 +743,7 @@
       "labels": [],
       "body": "cc @fxguenther",
       "createdAt": "2020-05-18T14:47:42Z",
-      "updatedAt": "2020-05-19T01:47:07Z",
+      "updatedAt": "2021-03-17T13:06:31Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
       "baseRefName": "master",
       "baseRefOid": "d7991241b8eb7229317bdddbffa4884dc5ca5e25",
@@ -673,7 +793,7 @@
       "labels": [],
       "body": "cc @fxguenther ",
       "createdAt": "2020-05-19T22:05:09Z",
-      "updatedAt": "2020-05-19T23:40:18Z",
+      "updatedAt": "2021-03-17T13:06:31Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
       "baseRefName": "master",
       "baseRefOid": "c413a2d5f4bcb612d93d2815a9a9974e419ff033",
@@ -701,7 +821,7 @@
       "labels": [],
       "body": "Whoops!",
       "createdAt": "2020-05-27T03:01:58Z",
-      "updatedAt": "2020-05-27T03:07:11Z",
+      "updatedAt": "2021-03-17T13:06:32Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
       "baseRefName": "master",
       "baseRefOid": "da0e734e0e576ede72bfb0fe9943f2afcdf62c9a",
@@ -737,7 +857,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2020-05-27T03:09:28Z",
-      "updatedAt": "2020-05-27T11:59:30Z",
+      "updatedAt": "2021-03-17T13:06:33Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
       "baseRefName": "master",
       "baseRefOid": "7f4a616cebc3d0d459f545743dcc417f870e404c",
@@ -779,7 +899,7 @@
       "labels": [],
       "body": "I'm not overly fond of the simplifications here, but I think it's probably sufficient for our purposes. One thing that's not clear to me is the extent to which we want to discuss the implications of mu settings.\r\n\r\nAnyway, this is just something to get us started. Please have a look!",
       "createdAt": "2020-06-10T20:11:55Z",
-      "updatedAt": "2020-06-17T01:37:43Z",
+      "updatedAt": "2021-03-17T13:06:34Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
       "baseRefName": "master",
       "baseRefOid": "c1db54dcf3b2c6f6b36de2e2ab816d7de827e984",
@@ -1676,7 +1796,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2020-09-16T11:53:56Z",
-      "updatedAt": "2020-09-16T13:57:02Z",
+      "updatedAt": "2021-03-17T13:06:35Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
       "baseRefName": "master",
       "baseRefOid": "77de32e3684dfb7f8d0b969fdc46df93757bd0d3",
@@ -1702,6 +1822,625 @@
           "body": "All good, thanks for catching those.",
           "createdAt": "2020-09-16T13:56:06Z",
           "updatedAt": "2020-09-16T13:56:06Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTc2MTE5NTE2",
+      "title": "Apply editorial suggestions from Mattsson and others.",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/pull/29",
+      "state": "MERGED",
+      "author": "chris-wood",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Partially (or fully?) addresses #28. There are a couple things I didn't do because I didn't think they were needed. @martinthomson, if you're OK with closing out that issue, please do so. :-)",
+      "createdAt": "2021-02-19T02:04:26Z",
+      "updatedAt": "2021-03-17T13:06:44Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
+      "baseRefName": "master",
+      "baseRefOid": "d4de6e0cdadfbabc89847b1668dde20e78136a22",
+      "headRepository": "cfrg/draft-irtf-cfrg-aead-limits",
+      "headRefName": "caw/editorial-feedback",
+      "headRefOid": "fe13aa7e2edc09172c731a0b60cd452220e8a988",
+      "closedAt": "2021-02-19T13:55:46Z",
+      "mergedAt": "2021-02-19T13:55:46Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "7c94c9ebbd230d056c425b253fb1d2ca36ef3039"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTkzODQzNDcz",
+          "commit": {
+            "abbreviatedOid": "97fcbaf"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "I think that this will do, yes.",
+          "createdAt": "2021-02-19T04:08:40Z",
+          "updatedAt": "2021-02-19T04:14:46Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "Is it optional or just maybe zero-length?  I know that this distinction is sometimes important, but it is here?",
+              "createdAt": "2021-02-19T04:08:40Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            },
+            {
+              "originalPosition": 92,
+              "body": "\"the probability of an attempted attack succeeding\" might be better",
+              "createdAt": "2021-02-19T04:10:45Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            },
+            {
+              "originalPosition": 177,
+              "body": "```suggestion\r\nMany of the formulae in this document depend on simplifying assumptions,\r\nfrom differing models, which means that results are not universally applicable. When using this\r\n```\r\n\r\nJust a grammar tic here.",
+              "createdAt": "2021-02-19T04:11:27Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            },
+            {
+              "originalPosition": 187,
+              "body": "Good point.  Maybe clarify with something like: \"In particular, in two-party communication, one participant cannot regard apparent overuse of a key by other participants as being in error, when it could be that the other participant has better information about bounds.\"",
+              "createdAt": "2021-02-19T04:13:46Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            },
+            {
+              "originalPosition": 193,
+              "body": "Good stuff.",
+              "createdAt": "2021-02-19T04:14:11Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTkzOTA5ODUw",
+          "commit": {
+            "abbreviatedOid": "97fcbaf"
+          },
+          "author": "fxguenther",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks, looks good to me.",
+          "createdAt": "2021-02-19T07:04:15Z",
+          "updatedAt": "2021-02-19T07:26:55Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "I agree zero-length might be more precise here.\r\n```suggestion\r\nas a function with four inputs -- secret key, nonce, plaintext, associated data\r\n(of which plaintext and associated data can optionally be zero-length) -- that\r\nproduces ciphertext output and an error code\r\n```\r\n",
+              "createdAt": "2021-02-19T07:04:15Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            },
+            {
+              "originalPosition": 183,
+              "body": "This is actually an interesting point: Yes, {{GCMProofs}} defines v as total number of decryption queries. However, forwarding encrypted ciphertexts to the decryption oracle or repeating queries to the decryption oracle is not allowed:\r\n\r\n\"Without loss of generality, we assume that A does not make trivial queries:\r\nif the encryption oracle returns (C, T ) for a query (N, A, M ), then A does not make a query\r\n(N, A, C, T ) to the decryption oracle, and A does not repeat a query to the decryption oracle.\" (p. 5)\r\n\r\nThat means that, in practice, any decryption query is a forgery _attempt_, so the difference actually is that we count _failed_ forgery attempts (which is the only thing you can do in practice) while they count _all_ forgery attempts (which you can only do in a model).  Of course, in practice, we care about bounding the any successful forgery.\r\n\r\nDoes the following capture this?\r\n\r\n```suggestion\r\nis not always the case. As an example of one such simplification, this document\r\ndefines v as the total number of failed decryption queries (that is, failed forgery\r\nattempts), whereas models usually count in v all forgery attempts.\r\n```",
+              "createdAt": "2021-02-19T07:19:34Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            },
+            {
+              "originalPosition": 187,
+              "body": "Agree that's an important point for (not) hard-coding limits. And I like the perspective that your communication partner might be cryptographically better informed ;-)",
+              "createdAt": "2021-02-19T07:22:35Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTk0MjA0MjE3",
+          "commit": {
+            "abbreviatedOid": "27b522b"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-02-19T13:49:50Z",
+          "updatedAt": "2021-02-19T13:49:51Z",
+          "comments": [
+            {
+              "originalPosition": 92,
+              "body": "I kept this as-is to be consistent with the IA definition. (We can rework in a future issue/PR if needed.)",
+              "createdAt": "2021-02-19T13:49:51Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTk0MjA0NjQ3",
+          "commit": {
+            "abbreviatedOid": "27b522b"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-02-19T13:50:21Z",
+          "updatedAt": "2021-02-19T13:50:22Z",
+          "comments": [
+            {
+              "originalPosition": 187,
+              "body": "Yeah, great suggestion!",
+              "createdAt": "2021-02-19T13:50:21Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTk0MjA0ODE1",
+          "commit": {
+            "abbreviatedOid": "27b522b"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-02-19T13:50:34Z",
+          "updatedAt": "2021-02-19T13:50:35Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "\ud83d\udc4d ",
+              "createdAt": "2021-02-19T13:50:35Z",
+              "updatedAt": "2021-02-19T13:51:50Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTkwOTAyNzAw",
+      "title": "Document perfect PRF/PRP assumption",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/pull/32",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This came up in discussions at SAAG and I thought it worth capturing.\r\n\r\nCloses #30.",
+      "createdAt": "2021-03-11T14:22:53Z",
+      "updatedAt": "2021-03-18T12:39:32Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
+      "baseRefName": "main",
+      "baseRefOid": "7c94c9ebbd230d056c425b253fb1d2ca36ef3039",
+      "headRepository": "cfrg/draft-irtf-cfrg-aead-limits",
+      "headRefName": "perfect-primitives",
+      "headRefOid": "12ddcc6b558c6827a0cc6e68e138bbeb93a3697d",
+      "closedAt": "2021-03-18T12:39:32Z",
+      "mergedAt": "2021-03-18T12:39:32Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "30a25e43ed9a363d4f774572a975b50f43f76f02"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjE0MjYxMTMx",
+          "commit": {
+            "abbreviatedOid": "511e8ee"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "cc @fxguenther for a quick look, too!",
+          "createdAt": "2021-03-17T12:46:37Z",
+          "updatedAt": "2021-03-17T12:46:50Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\npseudorandom function (PRF) or pseudorandom permutation (PRP) the AEAD builds\r\nupon is indistinguishable from a truly random function.  Thus, the advantage\r\n```",
+              "createdAt": "2021-03-17T12:46:37Z",
+              "updatedAt": "2021-03-17T23:23:25Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjE1MDU3NDA5",
+          "commit": {
+            "abbreviatedOid": "12ddcc6"
+          },
+          "author": "fxguenther",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "This looks good to me, thanks!",
+          "createdAt": "2021-03-18T07:42:34Z",
+          "updatedAt": "2021-03-18T07:42:34Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "id": "MDExOlB1bGxSZXF1ZXN0NjcyMDQyNDg4",
+      "title": "No nonce randomization",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/pull/33",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I did some analysis of Theorem 3.1 in the GCM MU paper.\r\n\r\nThe difference is small.  Theorem 3.1 adds `\u03c3/2^128` to the advantage.\r\nTheorem 4.3 adds `1/2^48` to the advantage.\r\n\r\nThe difference is felt when `\u03c3` gets large, then nonce randomization\r\ngets better.  It's not as small a value as I had expected (2^80 is a\r\nLARGE number) based on the original Bellare/Tackmann work, but it's\r\nthere.\r\n\r\nI restored the constant factor from the second term to the equations.  \r\nI tried a few things, but forcing a minimum on B seemed like it would be safest.\r\n\r\nThis is for yaronf/I-D#203.",
+      "createdAt": "2021-06-17T00:38:40Z",
+      "updatedAt": "2021-07-12T21:56:01Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
+      "baseRefName": "main",
+      "baseRefOid": "30a25e43ed9a363d4f774572a975b50f43f76f02",
+      "headRepository": "martinthomson/draft-wood-cfrg-aead-limits",
+      "headRefName": "no-nonce-randomization",
+      "headRefOid": "017a1e9fce69577bbcc3ba29d0daaad592115c08",
+      "closedAt": "2021-07-12T21:55:57Z",
+      "mergedAt": "2021-07-12T21:55:57Z",
+      "mergedBy": "martinthomson",
+      "mergeCommit": {
+        "oid": "70ba31dcb2f6c23306eb78e66ba84197a6a63616"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzA0MjEzNTg0",
+          "commit": {
+            "abbreviatedOid": "d8a3dc7"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks for doing the diff and work of writing this up!",
+          "createdAt": "2021-07-12T14:55:33Z",
+          "updatedAt": "2021-07-12T15:18:27Z",
+          "comments": [
+            {
+              "originalPosition": 83,
+              "body": "```suggestion\r\nProtocols without nonce randomization have limits that are essentially the\r\n```",
+              "createdAt": "2021-07-12T14:55:33Z",
+              "updatedAt": "2021-07-12T15:18:27Z"
+            },
+            {
+              "originalPosition": 80,
+              "body": "```suggestion\r\nsignificantly more than 1600 bytes of data.  Otherwise, B should be increased by 161 for\r\n```",
+              "createdAt": "2021-07-12T15:00:26Z",
+              "updatedAt": "2021-07-12T15:18:27Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njg3NTgwMDA2",
+      "title": "Provide example numbers",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/pull/36",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This shows the sort of analysis that might be done based on the\r\nsingle-key analysis we have for each AEAD.\r\n\r\nCloses #34.",
+      "createdAt": "2021-07-12T07:22:13Z",
+      "updatedAt": "2021-07-12T14:50:52Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
+      "baseRefName": "main",
+      "baseRefOid": "30a25e43ed9a363d4f774572a975b50f43f76f02",
+      "headRepository": "martinthomson/draft-wood-cfrg-aead-limits",
+      "headRefName": "example-table",
+      "headRefOid": "9e4c2c1daedcd87c76a7dd86d5a45e0359dded58",
+      "closedAt": "2021-07-12T14:50:52Z",
+      "mergedAt": "2021-07-12T14:50:52Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "8ded95506ba40938eefe9110031ed6905e29e272"
+      },
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "\ud83d\udc4d \ud83d\ude4f ",
+          "createdAt": "2021-07-12T14:50:49Z",
+          "updatedAt": "2021-07-12T14:50:49Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzA0MjA3ODc0",
+          "commit": {
+            "abbreviatedOid": "9e4c2c1"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-07-12T14:50:40Z",
+          "updatedAt": "2021-07-12T14:50:40Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njg4MjA1NzY3",
+      "title": "Advice on applying limits",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/pull/38",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I reviewed the formulae and I believe that we are safe in recommending\r\nl=1 for byte counting.  It's definitely inefficient, but the\r\ninefficiency doesn't translate into a security issue as we have always\r\nassumed that l is variable.\r\n\r\nCloses #35.",
+      "createdAt": "2021-07-12T21:55:17Z",
+      "updatedAt": "2021-07-12T21:58:00Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
+      "baseRefName": "main",
+      "baseRefOid": "8ded95506ba40938eefe9110031ed6905e29e272",
+      "headRepository": "martinthomson/draft-wood-cfrg-aead-limits",
+      "headRefName": "byte-counting",
+      "headRefOid": "04dca0bcd4631d971056ac4b45605c5fcf6b34ea",
+      "closedAt": "2021-07-12T21:58:00Z",
+      "mergedAt": "2021-07-12T21:58:00Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "1e06491accb0cc159ef622701c4ddca9d49f518f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzA0NTc3NzYw",
+          "commit": {
+            "abbreviatedOid": "d6263f7"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-07-12T21:57:45Z",
+          "updatedAt": "2021-07-12T21:57:45Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "```suggestion\r\noften as a result.\r\n```",
+              "createdAt": "2021-07-12T21:57:45Z",
+              "updatedAt": "2021-07-12T21:57:45Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzA0NTc3ODEz",
+          "commit": {
+            "abbreviatedOid": "d6263f7"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-07-12T21:57:50Z",
+          "updatedAt": "2021-07-12T21:57:50Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "id": "MDExOlB1bGxSZXF1ZXN0NjkxMjIxMjU1",
+      "title": "Editorial pass",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/pull/39",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We didn't really say anything about rekeying, which is the most obvious\r\nway of managing limits.\r\n\r\nThis was raised (indirectly) by @emanjon (via #37) and also @smyshsv in #10.\r\n\r\nI considered doing more for #10 here, but I think that it is probably\r\nbest to leave the RFC 8645 AEAD definitions (those with internal\r\nrekeying) out of this.  We've very deliberately concentrated on modes\r\nthat have widespread deployment and -- cool as they are -- I am not\r\naware of any implementation of internal rekeying modes.  (FWIW, it looks\r\nlike the analysis there is entirely consistent with the multi-key\r\nsetting results we have.)\r\n\r\nCloses #10.",
+      "createdAt": "2021-07-16T06:05:59Z",
+      "updatedAt": "2021-07-19T21:46:58Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
+      "baseRefName": "main",
+      "baseRefOid": "9e4180f74585dad378af32627fa1e95f92735941",
+      "headRepository": "martinthomson/draft-wood-cfrg-aead-limits",
+      "headRefName": "editorial-plus",
+      "headRefOid": "318def13d35b23cf092d00c81995ec652c45f70d",
+      "closedAt": "2021-07-19T21:46:58Z",
+      "mergedAt": "2021-07-19T21:46:57Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "076a00fc350c5a698960cc1c21d8cb9010f632ab"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzEwMDA2NDA5",
+          "commit": {
+            "abbreviatedOid": "318def1"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-07-19T21:46:44Z",
+          "updatedAt": "2021-07-19T21:46:44Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "id": "MDExOlB1bGxSZXF1ZXN0Njk1ODEyMTAz",
+      "title": "Partially implicit nonces",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/pull/40",
+      "state": "MERGED",
+      "author": "fxguenther",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "TLS 1.2 uses random, partially implicit nonces. The applicable multi-user analysis for this is in the GCM MU paper, Theorem 5.3.\r\n\r\nThe major difference to the TLS 1.3 / nonce randomization setting is that\r\n\r\n1. the nonce collision term `2^-48` is replaced by a negligible term (`2^-7t = 2^-224`)\r\n2. the `d` term becomes much larger, yielding a quadratic component (`(q+v)*o` resp. `(q+v)^2`) over `2^k`\r\n\r\n(This revises #33.)",
+      "createdAt": "2021-07-23T09:47:07Z",
+      "updatedAt": "2021-09-07T13:12:23Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
+      "baseRefName": "main",
+      "baseRefOid": "076a00fc350c5a698960cc1c21d8cb9010f632ab",
+      "headRepository": "fxguenther/draft-irtf-cfrg-aead-limits",
+      "headRefName": "partially-implicit-nonces",
+      "headRefOid": "45d5aa4227251633ecd7d32bdc361566ebba85e7",
+      "closedAt": "2021-08-23T02:03:09Z",
+      "mergedAt": "2021-08-23T02:03:09Z",
+      "mergedBy": "martinthomson",
+      "mergeCommit": {
+        "oid": "b578d298fc34f4b9815379b485feb6b518a74a82"
+      },
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Sorry for not getting to this in time, @fxguenther!",
+          "createdAt": "2021-09-07T13:12:23Z",
+          "updatedAt": "2021-09-07T13:12:23Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzEzNjA1ODQz",
+          "commit": {
+            "abbreviatedOid": "b4cca2f"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "I used a totally wrong theorem in my first pass at this.  Thanks for correcting that.",
+          "createdAt": "2021-07-23T10:41:27Z",
+          "updatedAt": "2021-08-11T00:13:02Z",
+          "comments": [
+            {
+              "originalPosition": 110,
+              "body": "I think you want p/2 here.\r\n\r\n```suggestion\r\n      p/2 >= (((q+v)*o + (q+v)^2) / 2^(k+26))\r\n```",
+              "createdAt": "2021-07-23T10:41:27Z",
+              "updatedAt": "2021-08-11T00:13:02Z"
+            },
+            {
+              "originalPosition": 68,
+              "body": "```suggestion\r\n    We can simplify the Theorem 5.3 advantage bound as follows:\r\n```",
+              "createdAt": "2021-07-23T10:41:37Z",
+              "updatedAt": "2021-08-11T00:13:03Z"
+            },
+            {
+              "originalPosition": 137,
+              "body": "```suggestion\r\n    subtracting terms for Pr[Bad_7] and Pr[Bad_8],\r\n```",
+              "createdAt": "2021-07-23T10:48:21Z",
+              "updatedAt": "2021-08-11T00:13:03Z"
+            },
+            {
+              "originalPosition": 87,
+              "body": "Should we also state that we assume that the attacker does no more work than every legitimate protocol user?",
+              "createdAt": "2021-07-23T10:49:30Z",
+              "updatedAt": "2021-08-11T00:13:03Z"
+            },
+            {
+              "originalPosition": 112,
+              "body": "```suggestion\r\n      p/2 >= ((q+v)*l*B / 2^127)\r\n```",
+              "createdAt": "2021-07-23T10:53:49Z",
+              "updatedAt": "2021-08-11T00:13:03Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzM0ODU1MDE0",
+          "commit": {
+            "abbreviatedOid": "9cbbc71"
+          },
+          "author": "fxguenther",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-08-20T09:38:39Z",
+          "updatedAt": "2021-08-20T09:38:39Z",
+          "comments": [
+            {
+              "originalPosition": 102,
+              "body": "```suggestion\r\nFor k = 128, assuming o <= q+v (i.e., that the attacker does not spend more work than all legitimate protocol users together), the limits are:\r\n```",
+              "createdAt": "2021-08-20T09:38:39Z",
+              "updatedAt": "2021-08-20T09:38:39Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzM0ODU1NDEx",
+          "commit": {
+            "abbreviatedOid": "9cbbc71"
+          },
+          "author": "fxguenther",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-08-20T09:39:09Z",
+          "updatedAt": "2021-08-20T09:39:09Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "The \"assuming o <= q+v\" could be explained a bit more below, yes. Made a suggestion.",
+              "createdAt": "2021-08-20T09:39:09Z",
+              "updatedAt": "2021-08-20T09:39:09Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "id": "MDExOlB1bGxSZXF1ZXN0NzI4MjI2MTU3",
+      "title": "Nonce length is fixed",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-aead-limits/pull/42",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As Joe notes, we assume a fixed length.  The definitions in the IETF all\r\nuse N_MIN = N_MAX = 12, but the NIST publications often veer into all\r\nsorts of wild fantasies of arbitrary nonce length.  This rarely works\r\nwell, as we see from the analysis in 2018/993.\r\n\r\nCloses #41.",
+      "createdAt": "2021-09-07T00:12:28Z",
+      "updatedAt": "2021-09-07T13:23:42Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-aead-limits",
+      "baseRefName": "main",
+      "baseRefOid": "747cee2ca355ae47444883f069100bb5f57d31fb",
+      "headRepository": "martinthomson/draft-wood-cfrg-aead-limits",
+      "headRefName": "nonce-length",
+      "headRefOid": "ad03c9da59acdf967ee19a15b6af31df2957617e",
+      "closedAt": "2021-09-07T13:23:42Z",
+      "mergedAt": "2021-09-07T13:23:42Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "f5c830c920e2de70fe50392cbd56ba268324c317"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQ3NTk4ODc1",
+          "commit": {
+            "abbreviatedOid": "1b0cf16"
+          },
+          "author": "fxguenther",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-07T06:45:16Z",
+          "updatedAt": "2021-09-07T06:45:17Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nanalyses in this document all fix the nonce length to r = 96.  Using other nonce\r\n```",
+              "createdAt": "2021-09-07T06:45:16Z",
+              "updatedAt": "2021-09-07T06:45:17Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQ3OTYxMzMx",
+          "commit": {
+            "abbreviatedOid": "1b0cf16"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-09-07T13:15:22Z",
+          "updatedAt": "2021-09-07T13:15:22Z",
           "comments": []
         }
       ]
